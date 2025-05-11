@@ -1,0 +1,21 @@
+---
+- name: Сustomization  
+  hosts: servers  
+  become: yes  
+  tasks:
+  - name: Update and upgrade apt packages
+    apt:
+      update_cache: yes
+      upgrade: yes
+  
+  - name: copy 50-vagrant.yaml
+    copy:
+      src: 50-vagrant.yaml
+      dest: /etc/netplan/50-vagrant.yaml
+      owner: root
+      group: root
+      mode: 0755
+
+  - name: Netplan apply
+    shell:
+      "netplan apply"
